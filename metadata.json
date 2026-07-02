@@ -1,0 +1,8 @@
+{
+  "name": "AI Studio Ultimate",
+  "description": "The ultimate Android AI operating system featuring multi-agent systems, local model support, and an extensible plugin marketplace.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -8,10 +8,13 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -28,14 +31,18 @@ fun AppNavigation() {
 
     Scaffold(
         bottomBar = {
-            NavigationBar {
+            NavigationBar(
+                containerColor = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colorScheme.onSurface,
+                tonalElevation = 8.dp
+            ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
 
                 val items = listOf(
                     Screen.Dashboard to Icons.Default.Home,
                     Screen.Workspace to Icons.AutoMirrored.Filled.List,
-                    Screen.ModelManager to Icons.Default.Settings,
+                    Screen.ModelManager to Icons.Rounded.Build,
                     Screen.AgentStudio to Icons.Default.Person,
                     Screen.Settings to Icons.Default.Settings
                 )
@@ -45,6 +52,13 @@ fun AppNavigation() {
                         icon = { Icon(icon, contentDescription = null) },
                         label = { Text(screen.route.replaceFirstChar { it.uppercase() }) },
                         selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = MaterialTheme.colorScheme.primary,
+                            selectedTextColor = MaterialTheme.colorScheme.primary,
+                            indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                            unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+                        ),
                         onClick = {
                             navController.navigate(screen.route) {
                                 popUpTo(navController.graph.findStartDestination().id) {
@@ -89,13 +103,13 @@ fun AppNavigation() {
 @Composable
 fun AgentStudioScreen() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
-        Text("Agent Studio")
+        Text("Agent Studio", color = MaterialTheme.colorScheme.onBackground)
     }
 }
 
 @Composable
 fun SettingsScreen() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
-        Text("Settings")
+        Text("Settings", color = MaterialTheme.colorScheme.onBackground)
     }
 }
